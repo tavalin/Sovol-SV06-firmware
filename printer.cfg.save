@@ -1,9 +1,3 @@
-[include pa_cal.cfg]
-
-[include fluidd.cfg]
-[virtual_sdcard]
-path: /home/pi/printer_data/gcodes
-on_error_gcode: CANCEL_PRINT
 
 # This file contains pin mappings for the stock Sovol SV06 Plus.
 # 
@@ -14,28 +8,16 @@ on_error_gcode: CANCEL_PRINT
 [include ./cfgs/misc-macros.cfg]
 [include ./cfgs/PARKING.cfg]
 [include ./cfgs/MECHANICAL_GANTRY_CALIBRATION.cfg]
-[include ./cfgs/TEST_SPEED.cfg]
-#[include ./cfgs/pa_cal.cfg]
-
-[include ./KAMP/Adaptive_Mesh.cfg]
-[include ./KAMP/Line_Purge.cfg]
-
-
-
 
 # NOTE Uncomment the ONE of the following lines if you're using an adxl345
 # [include ./cfgs/adxl-rp2040.cfg]
 # [include ./cfgs/adxl-rpi-pico-2x.cfg]
-# [include ./cfgs/adxl-direct.cfg]
-
-
-[save_variables]
-filename: save_variable.cfg
+[include ./cfgs/adxl-direct.cfg]
 
 [mcu]
 # NOTE Obtain definition by "ls -l /dev/serial/by-id/"
 #serial: /dev/serial/by-id/usb-1a86_USB2.0-Serial-if00-port0
-serial: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0
+serial: /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0 
 restart_method: command
 
 [printer]
@@ -65,7 +47,6 @@ homing_retract_dist: 0
 [tmc2209 stepper_x]
 uart_pin: PC1
 run_current: 0.820
-#run_current: 1.0
 stealthchop_threshold: 0
 interpolate: False
 sense_resistor: 0.150
@@ -88,7 +69,6 @@ homing_retract_dist: 0
 [tmc2209 stepper_y]
 uart_pin: PC0
 run_current: 0.880
-#run_current: 1.0
 stealthchop_threshold: 0
 interpolate: False
 sense_resistor: 0.150
@@ -110,7 +90,6 @@ homing_speed: 5
 [tmc2209 stepper_z]
 uart_pin: PA15
 run_current: 0.800
-#run_current: 1.0
 stealthchop_threshold: 0
 interpolate: False
 sense_resistor: 0.150
@@ -126,8 +105,7 @@ step_pin: PB4
 dir_pin: !PB3
 enable_pin: !PC3
 microsteps: 128
-#rotation_distance: 4.65 # NOTE Calibrate e-steps and adjust https://www.klipper3d.org/Rotation_Distance.html
-rotation_distance: 4.648
+rotation_distance: 4.65 # NOTE Calibrate e-steps and adjust https://www.klipper3d.org/Rotation_Distance.html
 nozzle_diameter: 0.400
 filament_diameter: 1.750
 heater_pin: PA1
@@ -140,8 +118,7 @@ sensor_pin: PC5
 min_temp: 0
 max_temp: 300
 max_extrude_only_distance: 150.0
-max_extrude_cross_section: 5
-#min_extrude_temp: 0
+min_extrude_temp: 190
 
 [tmc2209 extruder]
 uart_pin: PC14
@@ -178,7 +155,7 @@ y_offset: -20
 samples: 3
 samples_result: median
 samples_tolerance: 0.01
-samples_tolerance_retries: 10
+samples_tolerance_retries: 5
 
 [safe_z_home]
 home_xy_position: 123, 170
@@ -190,12 +167,8 @@ z_hop_speed: 15
 speed: 175
 mesh_min: 30, 30
 mesh_max: 270, 270
-#probe_count: 5,5
-#probe_count: 10,10
-probe_count: 3,3
-mesh_pps: 2, 2
+probe_count: 5,5
 algorithm: bicubic
-bicubic_tension: 0.1
 fade_start: 1
 fade_end: 10
 fade_target: 0
@@ -206,9 +179,6 @@ fade_target: 0
 
 [fan]
 pin: PA0
-
-
-
 
 #####################################################################
 #   Misc
@@ -243,34 +213,36 @@ runout_gcode:
 #*# <---------------------- SAVE_CONFIG ---------------------->
 #*# DO NOT EDIT THIS BLOCK OR BELOW. The contents are auto-generated.
 #*#
-#*# [heater_bed]
-#*# control = pid
-#*# pid_kp = 70.334
-#*# pid_ki = 1.006
-#*# pid_kd = 1229.086
-#*#
 #*# [extruder]
 #*# control = pid
-#*# pid_kp = 25.326
-#*# pid_ki = 2.111
-#*# pid_kd = 75.979
+#*# pid_kp = 23.577
+#*# pid_ki = 1.894
+#*# pid_kd = 73.383
 #*#
 #*# [probe]
-#*# z_offset = 1.890
+#*# z_offset = -0.050
 #*#
 #*# [bed_mesh default]
 #*# version = 1
 #*# points =
-#*# 	  -0.107969, -0.036563, -0.005625
-#*# 	  -0.011563, 0.045625, 0.028906
-#*# 	  0.012344, 0.035937, 0.076094
-#*# x_count = 3
-#*# y_count = 3
+#*# 	-1.353125, -0.362813, -0.282656, -0.306719, -0.448438
+#*# 	-0.524219, -0.221094, -0.139688, -0.136875, -0.271875
+#*# 	-0.342656, -0.121875, -0.040938, -0.069844, -0.204063
+#*# 	-0.337500, -0.143594, -0.015000, -0.016094, -0.184375
+#*# 	-0.368750, -0.157188, -0.063438, -0.073594, -0.209063
+#*# x_count = 5
+#*# y_count = 5
 #*# mesh_x_pps = 2
 #*# mesh_y_pps = 2
-#*# algo = lagrange
-#*# tension = 0.1
-#*# min_x = 124.39
-#*# max_x = 177.51
-#*# min_y = 135.28
-#*# max_y = 165.92
+#*# algo = bicubic
+#*# tension = 0.2
+#*# min_x = 30.0
+#*# max_x = 270.0
+#*# min_y = 30.0
+#*# max_y = 270.0
+#*#
+#*# [heater_bed]
+#*# control = pid
+#*# pid_kp = 71.715
+#*# pid_ki = 1.011
+#*# pid_kd = 1272.037
