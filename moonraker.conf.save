@@ -76,7 +76,7 @@ path: ~/fluidd
 [timelapse]
 output_path: ~/printer_data/timelapse/
 frame_path: /tmp/timelapse/printer
-
+	
 
 # Crowsnest update_manager entry
 [update_manager crowsnest]
